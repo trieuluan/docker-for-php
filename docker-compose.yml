@@ -1,0 +1,76 @@
+version: '3.8'
+
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.2
+    environment:
+      - node.name=elasticsearch
+      - cluster.name=datasearch
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - cluster.initial_master_nodes=elasticsearch
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    networks:
+      - nets
+    ports:
+      - "9200:9200"
+    volumes:
+      - ./es/data:/usr/share/elasticsearch/data
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.15.2
+    networks:
+      - nets
+    ports:
+      - "5601:5601"
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-123}
+      PGDATA: /data/postgres
+      DB_EXTENSION: uuid-ossp
+    volumes:
+      - ./postgres/data:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - nets
+    restart: unless-stopped
+  mysql:
+    image: mysql
+    restart: always
+    build:
+      context: ./mysql
+      dockerfile: Dockerfile
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/mysql.cnf:/etc/mysql/conf.d/mysql.cnf
+      - ./mysql/logs:/var/log/mysql
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
+      MYSQL_ROOT_HOST: '%'
+    networks:
+      - nets
+  php-apache-environment:
+    container_name: php-apache
+    build:
+      context: ./php
+      dockerfile: Dockerfile
+    image: php:7.4-apache
+    volumes:
+      - ~/Sites:/var/www/html
+      - ./php/php.ini:/usr/local/etc/php/php.ini
+      - ./php/sites-available:/etc/apache2/sites-available
+    ports:
+      - "80:80"
+    networks:
+      - nets
+
+networks:
+  nets:
+    driver: bridge
