@@ -22,3 +22,8 @@ es/data/*
 mysql/data/*
 mysql/logs/*
 postgres/data/*
+lsws/acme
+lsws/admin-conf
+lsws/bin
+lsws/conf
+lsws/logs
