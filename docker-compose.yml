@@ -74,6 +74,9 @@ services:
     build:
       context: ./lsws
       dockerfile: Dockerfile
+    depends_on:
+      - mysql
+      - postgres
     env_file:
       - .env
     volumes:
@@ -93,6 +96,8 @@ services:
     restart: always
     environment:
       TZ: ${TimeZone}
+    networks:
+      - nets
 
 networks:
   nets:
