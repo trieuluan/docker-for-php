@@ -1,0 +1,20 @@
+docroot $VH_ROOT/gene-new/
+enablegzip 1
+
+errorlog $SERVER_ROOT/logs/$VH_NAME/error.log {
+    rollingsize 10M
+    loglevel ERROR
+    useserver 0
+}
+
+accesslog $SERVER_ROOT/logs/$VH_NAME/access.log {
+    useserver 0
+    rollingsize 10M
+    keepdays 30
+    compressarchive 1
+}
+
+rewrite  {
+    enable 1
+    autoloadhtaccess 1
+}

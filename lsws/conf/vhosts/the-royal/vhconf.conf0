@@ -1,0 +1,37 @@
+docRoot                   $VH_ROOT/the-royal/
+enableGzip                1
+
+errorlog $SERVER_ROOT/logs/$VH_NAME/error.log {
+  useServer               0
+  logLevel                ERROR
+  rollingSize             10M
+}
+
+accesslog $SERVER_ROOT/logs/$VH_NAME/access.log {
+  useServer               0
+  rollingSize             10M
+  keepDays                30
+  compressArchive         1
+}
+
+index  {
+  useServer               0
+  indexFiles              index.html, index.php
+  autoIndex               0
+  autoIndexURI            /_autoindex/default.php
+}
+
+accessControl  {
+  allow                   *
+}
+
+rewrite  {
+  enable                  1
+  autoLoadHtaccess        1
+}
+
+module cache {
+enableCache         1
+  ls_enabled              0
+}
+

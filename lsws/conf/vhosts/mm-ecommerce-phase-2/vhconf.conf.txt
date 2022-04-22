@@ -1,0 +1,20 @@
+docroot $VH_ROOT/mm-ecommerce-phase-2
+enablegzip 1
+
+accesslog $SERVER_ROOT/logs/$VH_NAME/access.log {
+    compressarchive 1
+    keepdays 30
+    rollingsize 10M
+    useserver 0
+}
+
+rewrite  {
+    autoloadhtaccess 1
+    enable 1
+}
+
+errorlog $SERVER_ROOT/logs/$VH_NAME/error.log {
+    loglevel ERROR
+    useserver 0
+    rollingsize 1M
+}

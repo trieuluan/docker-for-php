@@ -3,8 +3,6 @@
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License, version 2.0,
 # as published by the Free Software Foundation.
-#
-# This program is also distributed with certain software (including
 # but not limited to OpenSSL) that is licensed under separate terms,
 # as designated in a particular file or component or in included license
 # documentation.  The authors of MySQL hereby grant you an additional
@@ -31,9 +29,13 @@
 [mysqld]
 sql_mode = "STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION"
 innodb_ft_min_token_size = 1
+ft_min_word_len = 1
+innodb_optimize_fulltext_only = ON
 general_log=ON
 general_log_file=/var/log/mysql/general.log
 log-queries-not-using-indexes= ON
 slow-query-log = ON
 slow_query_log_file       = /var/log/mysql/mysql-slow.log
 long_query_time=2
+expire_logs_days = 1
+max_binlog_size = 2M

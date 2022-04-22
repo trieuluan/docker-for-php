@@ -1,0 +1,5 @@
+*
+!.gitignore
+!vhosts
+!vhosts/*
+!vhosts/*/*

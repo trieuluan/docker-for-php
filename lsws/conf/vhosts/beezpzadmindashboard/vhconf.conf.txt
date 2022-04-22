@@ -1,0 +1,37 @@
+docroot $VH_ROOT/$VH_NAME
+vhdomain beezpzbackend.test
+enablegzip 1
+
+errorlog $SERVER_ROOT/logs/$VH_NAME/error.log {
+    loglevel ERROR
+    useserver 0
+    compressarchive 1
+    keepdays 30
+    rollingsize 1M
+}
+
+phpinioverride  {
+    php_value max_execution_time 300
+}
+
+accesscontrol  {
+    allow *
+}
+
+accesslog $SERVER_ROOT/logs/$VH_NAME/access.log {
+    keepdays 30
+    compressarchive 1
+    useserver 0
+    rollingsize 10M
+}
+
+index  {
+    autoindex 0
+    useserver 0
+    indexfiles index.html, index.php
+}
+
+rewrite  {
+    enable 1
+    autoloadhtaccess 1
+}

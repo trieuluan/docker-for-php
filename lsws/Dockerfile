@@ -1,6 +1,7 @@
-FROM litespeedtech/openlitespeed:1.7.14-lsphp74
+FROM litespeedtech/openlitespeed:latest
 RUN apt-get update
-RUN apt-get install lsphp74-* make gcc -y
+RUN apt-get install lsphp74 lsphp81 -y
+RUN apt-get install lsphp74-* lsphp81-* make gcc -y
 RUN wget http://xdebug.org/files/xdebug-3.1.2.tgz;
 RUN tar -xvzf xdebug-3.1.2.tgz
 RUN cd xdebug-3.1.2;/usr/local/lsws/lsphp74/bin/phpize;./configure --with-php-config=/usr/local/lsws/lsphp74/bin/php-config;make;cp modules/xdebug.so /usr/local/lsws/lsphp74/lib/php/20190902/xdebug.so

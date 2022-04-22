@@ -1,0 +1,24 @@
+enablegzip 1
+docroot $VH_ROOT/dnr-api/public
+
+errorlog $SERVER_ROOT/logs/$VH_NAME/error.log {
+    useserver 0
+    loglevel ERROR
+    rollingsize 1M
+}
+
+accesslog $SERVER_ROOT/logs/$VH_NAME/access.log {
+    rollingsize 10M
+    compressarchive 1
+    useserver 0
+    keepdays 30
+}
+
+scripthandler  {
+    add lsapi:lsphp81 php
+}
+
+rewrite  {
+    enable 1
+    autoloadhtaccess 1
+}
