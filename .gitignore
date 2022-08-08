@@ -26,3 +26,4 @@ lsws/acme
 lsws/admin-conf
 lsws/bin
 lsws/logs
+mongo/db/*

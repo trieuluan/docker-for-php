@@ -20,5 +20,6 @@ scripthandler  {
 
 rewrite  {
   enable                  1
+  autoLoadHtaccess        1
 }
 

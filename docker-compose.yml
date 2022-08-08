@@ -74,9 +74,9 @@ services:
     build:
       context: ./lsws
       dockerfile: Dockerfile
-    depends_on:
-      - mysql
-      - postgres
+#    depends_on:
+#      - mysql
+#      - postgres
     env_file:
       - .env
     volumes:
@@ -86,7 +86,8 @@ services:
       - ~/Sites:/var/www/vhosts/
       - ./lsws/acme:/root/.acme.sh/
       - ./lsws/logs:/usr/local/lsws/logs/
-      - ./lsws/php.ini:/usr/local/lsws/lsphp74/etc/php/7.4/litespeed/php.ini
+      - ./lsws/php-conf/php74.ini:/usr/local/lsws/lsphp74/etc/php/7.4/litespeed/php.ini
+      - ./lsws/php-conf/php80.ini:/usr/local/lsws/lsphp80/etc/php/8.0/litespeed/php.ini
     ports:
       - 80:80
       - 443:443
@@ -96,6 +97,18 @@ services:
     restart: always
     environment:
       TZ: ${TimeZone}
+    networks:
+      - nets
+  mongo:
+    build: ./mongo
+    ports:
+      - "${MONGODB_PORT}:27017"
+#    environment:
+#      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
+#      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
+    volumes:
+      - ./mongo/db:/data/db
+      - ./mongo/config:/data/configdb
     networks:
       - nets
 
