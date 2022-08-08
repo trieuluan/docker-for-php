@@ -1,0 +1,22 @@
+enablegzip 1
+docroot $VH_ROOT/tiny
+
+accesslog $SERVER_ROOT/logs/$VH_NAME/access.log {
+    keepdays 30
+    useserver 0
+    compressarchive 1
+    rollingsize 10M
+}
+
+errorlog $SERVER_ROOT/logs/$VH_NAME/error.log {
+    rollingsize 10M
+    compressarchive 1
+    keepdays 10
+    useserver 1
+    loglevel ERROR
+}
+
+rewrite  {
+    enable 1
+    autoloadhtaccess 1
+}

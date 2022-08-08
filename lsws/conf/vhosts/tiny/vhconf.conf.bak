@@ -1,10 +1,12 @@
-docRoot                   $VH_ROOT/dnr-api/public
+docRoot                   $VH_ROOT/tiny
 enableGzip                1
 
 errorlog $SERVER_ROOT/logs/$VH_NAME/error.log {
-  useServer               0
+  useServer               1
   logLevel                ERROR
-  rollingSize             1M
+  rollingSize             10M
+  keepDays                10
+  compressArchive         1
 }
 
 accesslog $SERVER_ROOT/logs/$VH_NAME/access.log {
@@ -12,14 +14,5 @@ accesslog $SERVER_ROOT/logs/$VH_NAME/access.log {
   rollingSize             10M
   keepDays                30
   compressArchive         1
-}
-
-scripthandler  {
-  add                     lsapi:lsphp80 php
-}
-
-rewrite  {
-  enable                  1
-  autoLoadHtaccess        1
 }
 

@@ -1,0 +1,22 @@
+docroot $VH_ROOT/sode
+enablegzip 1
+
+accesslog $SERVER_ROOT/logs/$VH_NAME/access.log {
+    rollingsize 10M
+    useserver 0
+    keepdays 30
+    compressarchive 1
+}
+
+errorlog $SERVER_ROOT/logs/$VH_NAME/error.log {
+    rollingsize 10M
+    compressarchive 1
+    loglevel ERROR
+    useserver 1
+    keepdays 10
+}
+
+rewrite  {
+    enable 1
+    autoloadhtaccess 1
+}

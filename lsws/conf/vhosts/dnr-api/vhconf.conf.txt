@@ -9,16 +9,16 @@ errorlog $SERVER_ROOT/logs/$VH_NAME/error.log {
 
 accesslog $SERVER_ROOT/logs/$VH_NAME/access.log {
     rollingsize 10M
-    compressarchive 1
-    useserver 0
     keepdays 30
-}
-
-scripthandler  {
-    add lsapi:lsphp81 php
+    useserver 0
+    compressarchive 1
 }
 
 rewrite  {
     enable 1
     autoloadhtaccess 1
+}
+
+scripthandler  {
+    add lsapi:lsphp80 php
 }
