@@ -2,12 +2,13 @@ FROM php:7.4-apache
 RUN pecl install --force xdebug && docker-php-ext-enable xdebug
 RUN apt-get update && apt-get upgrade -y && apt-get install -y git
 RUN apt-get install -y $PHPIZE_DEPS zip unzip libzip-dev libpng-dev sendmail libonig-dev freetds-dev libicu-dev libpq-dev unixodbc-dev
-RUN docker-php-ext-configure pdo_dblib --with-libdir=/lib/x86_64-linux-gnu \
-    && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
-    && docker-php-ext-configure pdo_odbc --with-pdo-odbc=unixODBC,/usr
+#RUN docker-php-ext-configure pdo_dblib --with-libdir=/lib/x86_64-linux-gnu \
+#    && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
+#    && docker-php-ext-configure pdo_odbc --with-pdo-odbc=unixODBC,/usr
+RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
 RUN docker-php-ext-configure zip
-RUN docker-php-ext-install zip gd intl mbstring mysqli pdo pgsql pdo_mysql pdo_dblib pdo_pgsql pdo_odbc \
-    && docker-php-ext-enable mysqli pdo_mysql pdo_dblib pdo_pgsql pdo_odbc
+RUN docker-php-ext-install zip gd intl mbstring mysqli pdo pgsql pdo_mysql pdo_pgsql \
+    && docker-php-ext-enable mysqli pdo_mysql pdo_pgsql
 RUN pecl install -o -f grpc
 #install protoc
 RUN docker-php-ext-enable grpc

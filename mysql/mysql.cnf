@@ -27,6 +27,9 @@
 [mysql]
 
 [mysqld]
+collation-server = utf8_unicode_ci
+character-set-server = utf8
+default-authentication-plugin=mysql_native_password
 sql_mode = "STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION"
 innodb_ft_min_token_size = 1
 ft_min_word_len = 1

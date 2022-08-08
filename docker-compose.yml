@@ -41,6 +41,7 @@ services:
     restart: unless-stopped
   mysql:
     image: mysql
+    platform: linux/x86_64
     restart: always
     build:
       context: ./mysql
@@ -56,27 +57,34 @@ services:
       MYSQL_ROOT_HOST: '%'
     networks:
       - nets
-  php-apache-environment:
-    container_name: php-apache
+  php74:
     build:
-      context: ./php
+      context: ./php74
       dockerfile: Dockerfile
-    image: php:7.4-apache
     volumes:
       - ~/Sites:/var/www/html
-      - ./php/php.ini:/usr/local/etc/php/php.ini
-      - ./php/sites-available:/etc/apache2/sites-available
+      - ./php74/php.ini:/usr/local/etc/php/php.ini
+      - ./php74/sites-available:/etc/apache2/sites-available
+    ports:
+      - "80:80"
+    networks:
+      - nets
+  php56:
+    build:
+      context: ./php56
+      dockerfile: Dockerfile
+    volumes:
+      - ~/Sites:/var/www/html
+      - ./php56/php.ini:/usr/local/etc/php/php.ini
     ports:
       - "80:80"
     networks:
       - nets
   litespeed:
+    platform: linux/x86_64
     build:
       context: ./lsws
       dockerfile: Dockerfile
-    depends_on:
-      - mysql
-      - postgres
     env_file:
       - .env
     volumes:
