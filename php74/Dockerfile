@@ -27,4 +27,6 @@ COPY sites-available/beezpz.conf /etc/apache2/sites-available/beezpz.conf
 RUN a2ensite beezpz.conf
 RUN a2enmod rewrite
 RUN a2enmod headers
+RUN a2enmod proxy
+RUN a2enmod proxy_http
 RUN service apache2 restart

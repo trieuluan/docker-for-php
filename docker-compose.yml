@@ -69,6 +69,13 @@ services:
       - "80:80"
     networks:
       - nets
+  nginx:
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: ./nginx
+    ports:
+      - "80:80"
   php56:
     build:
       context: ./php56
